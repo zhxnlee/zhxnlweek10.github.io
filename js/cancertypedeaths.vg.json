@@ -1,0 +1,90 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text":"Total Cancer Deaths by Type", "fontSize": 20, "offset": 20,"subtitle":"Number of Deaths for each Cancer Type","subtitleColor": "grey","subtitlePadding":10},
+  "data": {
+    "url": "https://raw.githubusercontent.com/zhxnlee/VegaLite_3179/main/Cancer/total-cancer-deaths-by-type.csv",
+    "format": {
+      "type": "csv"
+    }
+    
+  },
+  "params": [
+    {
+      "name": "YearSelection",
+      "value": 1990,
+      "bind": {
+        "input": "range",
+        "min": 1990,
+        "max": 2019,
+        "step": 1,
+        "name": "Year     "
+      }
+    },
+    {
+      "name": "Continent_Selection",
+      "bind":{
+        "input": "select",
+        "options": [
+          null, 
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"        
+          ],"labels":[
+            "All Continents", 
+            "North America",
+            "South America",
+            "Europe",
+            "Africa",
+            "Asia",
+            "Oceania" 
+            ],
+          "name": "Continent  "
+      }
+    }],
+  "transform": [
+    {"fold": [
+      "Liver cancer", "Kidney cancer", "Lip and oral cavity cancer",
+      "Tracheal, bronchus, and lung cancer", "Larynx cancer", "Gallbladder and biliary tract cancer",
+      "Malignant skin melanoma", "Leukemia", "Hodgkin lymphoma", "Multiple myeloma",
+      "Other neoplasms", "Breast cancer", "Prostate cancer", "Thyroid cancer", "Stomach cancer",
+      "Bladder cancer", "Uterine cancer", "Ovarian cancer", "Cervical cancer",
+      "Brain and central nervous system cancer", "Non-Hodgkin lymphoma", "Pancreatic cancer",
+      "Esophageal cancer", "Testicular cancer", "Nasopharynx cancer", "Other pharynx cancer",
+      "Colon and rectum cancer", "Non-melanoma skin cancer", "Mesothelioma"
+    ], "as": ["Cancer Type", "Number of Deaths"]},
+    {"filter": "YearSelection == null || datum.Year ==  YearSelection"},
+    {"filter": "Continent_Selection == null || datum.Continents == Continent_Selection" }
+  ],
+  "mark": "bar",
+  "encoding": {
+    "y": {
+      "field": "Cancer Type",
+      "type": "nominal",
+      "title": "Cancer Type",
+      "sort": "-x"
+      
+    },
+    "x": {
+      "aggregate": "sum",
+      "field": "Number of Deaths",
+      "type": "quantitative",
+      "title": "Total Number of Deaths"
+
+    },
+    "color": {
+      "field": "Cancer Type",  
+      "type": "nominal",
+      "title": "Cancer Type",  
+      "scale": {"scheme": "category20"}  
+    },
+    "tooltip": [
+    {"field": "Cancer Type", "type": "nominal", "title": "Cancer Type"},
+    {"field": "Number of Deaths", "type": "quantitative"}
+  ]
+  },
+  "width": 400,
+  "height": 400
+}

@@ -1,0 +1,46 @@
+#cancerpercentagemap {
+	top:100px;
+	bottom: 100px; 
+	left: 200px;
+	right: 100px;
+	display:inline-block
+	/*height: 1000px;
+	width: 800px;*/
+
+}
+#cancertypedeaths {
+	top:100px;
+	bottom: 100px; 
+	left: 100px;
+	right: 100px;
+	/*height: 1000px;
+	width: 800px;*/
+}
+
+#deathrateage{
+	top:300px;
+	bottom: 100px; 
+	left: 100px;
+	right: 100px;
+	/*height: 1000px;
+	width: 800px;*/
+}
+.map_text {
+	
+	margin: auto;
+	width: 50%;
+	padding: 10px;
+	padding-top: 100px;
+	
+  }
+
+#deathratemap {
+	top:400px;
+	bottom: 100px; 
+	left: 200px;
+	right: 100px;
+	display:inline-block
+	/*height: 1000px;
+	width: 800px;*/
+
+}

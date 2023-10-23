@@ -1,0 +1,118 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text":"Prevalance of Cancer Globally", "fontSize": 20, "offset": 20,"subtitle":"Share of population(%) with Cancer","subtitleColor": "grey","subtitlePadding":10},
+  "width": 500,
+  "height": 300,
+  "background": null,
+  "projection": {"type": "equalEarth"},
+  "params": [
+    {
+      "name": "YearSelection",
+      "value": 1990,
+      "bind": {
+        "input": "range",
+        "min": 1990,
+        "max": 2019,
+        "step": 1,
+        "name": "Year  "
+      }
+    },
+    {
+      "name": "CancerPercentage",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "name": "Global Percentage  "
+      }
+    },
+    {
+      "name": "Continent_Selection",
+      "bind":{
+        "input": "select",
+        "options": [
+          null, 
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"        
+          ],"labels":[
+            "All Continents", 
+            "North America",
+            "South America",
+            "Europe",
+            "Africa",
+            "Asia",
+            "Oceania" 
+            ],
+            
+          "name": "Continent     "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
+        "format": {"type": "topojson", "feature": "oceans"}
+      },
+      "mark": {"type": "geoshape", "fill": "skyblue"}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/zhxnlee/VegaLite_3179/main/ne_110m.json",
+        "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
+      },
+      "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/zhxnlee/VegaLite_3179/main/Cancer/share-of-population-with-cancer.csv"
+      },
+      "transform": [
+        {
+          "lookup": "Entity",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+              "format": {
+                "type": "topojson",
+                "feature": "ne_110m_admin_0_countries"
+              }
+            },
+            "key": "properties.NAME"
+          },
+          "as": "geo"
+        },
+        {
+          "calculate": "datum['Current number of cases of neoplasms per 100 people, in both sexes aged age-standardized']",
+          "as": "Cancer"
+        },
+        {"filter": "YearSelection == null || datum.Year ==  YearSelection"},
+        {"filter": "datum['Cancer'] > CancerPercentage"},
+        {"filter": "Continent_Selection == null || datum.Continents == Continent_Selection" }
+      ],
+      "mark": {"type": "geoshape"},
+      "encoding": {
+        "shape": {"field": "geo", "type": "geojson"},
+        "color": {
+          "field": "Cancer",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [2,4,6,8,10],
+            "range": ["#fdbe85", "#fd8d3c", "#e6550d", "#a63603", "#5b1e02","#000000"]
+          }
+        },
+        "tooltip": [
+          {"field": "Entity", "type": "nominal", "title": "Entity"},
+          {"field": "Cancer", "type": "quantitative", "title": "Cancer Global Percentage(%)"}
+        ]
+      }
+    }
+  ]
+}

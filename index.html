@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+  
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+</head>
+<body>
+<h1>Global Cancer Analysis</h1>  
+<div id="cancerpercentagemap"></div>
+<div class="map_text">
+<p>The choropleth map shows the share of population with cancer across the years. As we can see from the choropleth map, the northern part of the World map around Russia has a higher
+  percentage of cancer of over 10%. 
+</p>
+</div>
+<div id="cancertypedeaths"></div>
+<div class="map_text">
+  <p>The barplot above shows the number of deaths that is caused by different types of cancer globally. 
+  </p>
+  </div>
+<div id="barplot2"></div> 
+
+<div id="deathratemap"></div>
+<div id="deathrateage"></div>
+ 
+<script type="text/javascript">
+
+  var cancerpercentagemap = "js/cancerpercentagemap.vg.json";
+  vegaEmbed('#cancerpercentagemap', cancerpercentagemap ).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+
+  var cancertypedeaths = "js/cancertypedeaths.vg.json"; // Update this to the correct path
+  vegaEmbed('#cancertypedeaths', cancertypedeaths).then(function(result) {
+    // Access the Vega view instance for the scatter plot here
+  }).catch(console.error);
+
+  var deathrateage= "js/deathrateage.vg.json";
+  vegaEmbed('#deathrateage', deathrateage).then(function(result) { // Corrected id
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+
+  var deathratemap = "js/deathratemap.vg.json";
+  vegaEmbed('#deathratemap', deathratemap).then(function(result) { // Corrected id
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Cancer deaths by Age Group",
+  "data": {
+    "url": "https://raw.githubusercontent.com/zhxnlee/VegaLite_3179/main/Cancer/cancer-death-rates-by-age.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "params": [
+    {
+      "name": "YearSelection",
+      "value": 1990,
+      "bind": {
+        "input": "range",
+        "min": 1990,
+        "max": 2019,
+        "step": 1,
+        "name": "Year"
+      }
+    }
+  
+  ],
+  "transform": [
+    {
+      "fold": [
+        "70+ years", "50-69 years", "15-49 years", "Under 5"
+      ],
+      "as": ["Age Group", "Number of Deaths"]
+    },
+    {"filter": "YearSelection == null || datum.Year == YearSelection"}
+   
+  ],
+  "mark": "bar",
+  "encoding": {
+    "y": {
+      "field": "Age Group",
+      "type": "nominal",
+      "title": "Age Group",
+      "sort": ["Under 5", "15-49 years", "50-69 years", "70+ years"] 
+    },
+    "x": {
+      "aggregate": "sum",
+      "field": "Number of Deaths",
+      "type": "quantitative",
+      "title": "Total Number of Deaths",
+      "scale": {
+        "domain": [0, 260000]
+       
+      }
+    },
+    "color": {
+      "field": "Age Group",  
+      "type": "nominal",
+      "title": "Age Group",  
+      "scale": {"scheme": "category20"}  
+    },
+    "tooltip": [
+      {"field": "Age Group", "type": "nominal", "title": "Age Group"},
+      {"field": "Number of Deaths", "type": "quantitative", "title": "Number of Deaths", "aggregate":"sum"}
+    ]
+  },
+  "width": 400,
+  "height": 400
+}

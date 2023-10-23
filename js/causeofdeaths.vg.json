@@ -1,0 +1,92 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text":"Cause of Deaths", "fontSize": 20, "offset": 20},
+  "data": {
+    "url": "https://raw.githubusercontent.com/zhxnlee/VegaLite_3179/main/Cancer/annual-number-of-deaths-by-cause.csv",
+    "format": {
+      "type": "csv"
+    }
+    
+  },
+  "params": [
+    {
+      "name": "YearSelection",
+      "value": 1990,
+      "bind": {
+        "input": "range",
+        "min": 1990,
+        "max": 2019,
+        "step": 1,
+        "name": "Year   "
+      }
+    }
+ ],
+  "transform": [
+    {
+  "fold": [
+    "Meningitis",
+    "Alzheimers disease and other dementias",
+    "Parkinsons disease",
+    "Nutritional deficiencies",
+    "Malaria",
+    "Drowning",
+    "Interpersonal violence",
+    "Maternal disorders",
+    "HIV/AIDS",
+    "Drug use disorders",
+    "Tuberculosis",
+    "Cardiovascular diseases",
+    "Lower respiratory infections",
+    "Neonatal disorders",
+    "Alcohol use disorders",
+    "Self-harm",
+    "Exposure to forces of nature",
+    "Diarrheal diseases",
+    "Environmental heat and cold exposure",
+    "Cancers",
+    "Conflict and terrorism",
+    "Diabetes mellitus",
+    "Chronic kidney disease",
+    "Poisonings",
+    "Protein-energy malnutrition",
+    "Road injuries",
+    "Chronic respiratory diseases",
+    "Cirrhosis and other chronic liver diseases",
+    "Digestive diseases",
+    "Fire, heat, and hot substances",
+    "Acute hepatitis"
+  ],
+  "as": ["Cause of Death", "Number of Deaths"]
+},
+    {"filter": "YearSelection == null || datum.Year ==  YearSelection"}
+  ],
+  "mark": "bar",
+  "encoding": {
+    "y": {
+      "field": "Cause of Death",
+      "type": "nominal",
+      "title": "Cause of Death",
+      "sort": "-x"
+      
+    },
+    "x": {
+      "aggregate": "sum",
+      "field": "Number of Deaths",
+      "type": "quantitative",
+      "title": "Total Number of Deaths"
+
+    },
+    "color": {
+      "field": "Cause of Death",  
+      "type": "nominal",
+      "title": "Cause of Death",  
+      "scale": {"scheme": "category20"}  
+    },
+    "tooltip": [
+    {"field": "Cause of Death", "type": "nominal", "title": "Cause of Death"},
+    {"field": "Number of Deaths", "type": "quantitative"}
+  ]
+  },
+  "width": 300,
+  "height": 400
+}
